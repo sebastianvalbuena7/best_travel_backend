@@ -50,7 +50,6 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse read(UUID uuid) {
-        //Hola
         var ticketFromDB = ticketRepository.findById(uuid).orElseThrow();
         return entityToResponse(ticketFromDB);
     }
