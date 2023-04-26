@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/ticket")
 @AllArgsConstructor
-//@Controller // Se usa cuando se tienen las vistas integradas con un JSP como Thymeleaf
+//@Controller // Se usa cuando se tienen las vistas integradas con un JSP parecido Thymeleaf
 public class TicketController {
     public final ITicketService ticketService;
 

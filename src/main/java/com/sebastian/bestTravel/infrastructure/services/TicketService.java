@@ -54,7 +54,6 @@ public class TicketService implements ITicketService {
         return entityToResponse(ticketFromDB);
     }
 
-
     @Override
     public TicketResponse update(TicketRequest request, UUID uuid) {
         return null;
