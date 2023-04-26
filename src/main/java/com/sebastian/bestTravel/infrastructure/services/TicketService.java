@@ -29,6 +29,12 @@ public class TicketService implements ITicketService {
     private final TicketRepository ticketRepository;
 
     @Override
+    public BigDecimal findPrice(Long flyId) {
+        var fly = flyRepository.findById(flyId).orElseThrow();
+        return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+    }
+
+    @Override
     public TicketResponse create(TicketRequest request) {
         var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
         var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
@@ -39,7 +45,7 @@ public class TicketService implements ITicketService {
                 .purchaseDate(LocalDate.now())
                 .arrivalDate(LocalDateTime.now())
                 .departureDate(LocalDateTime.now())
-                .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+                .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
                 .build();
 
         var ticketPersistent = ticketRepository.save(ticketToPersist);
@@ -56,12 +62,21 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse update(TicketRequest request, UUID uuid) {
-        return null;
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        var ticketToUpdate = ticketRepository.findById(uuid).orElseThrow();
+        ticketToUpdate.setFly(fly);
+        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
+        ticketToUpdate.setArrivalDate(LocalDateTime.now());
+        ticketToUpdate.setDepartureDate(LocalDateTime.now());
+        var ticketUpdated = ticketRepository.save(ticketToUpdate);
+        log.info("Ticket updated" + ticketUpdated.getId());
+        return entityToResponse(ticketUpdated);
     }
 
     @Override
     public void delete(UUID uuid) {
-
+        var ticketToDelete = ticketRepository.findById(uuid).orElseThrow();
+        ticketRepository.delete(ticketToDelete);
     }
 
     private TicketResponse entityToResponse(TicketEntity entity) {
@@ -73,4 +88,6 @@ public class TicketService implements ITicketService {
         response.setFly(flyResponse);
         return response;
     }
+
+    private static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.25);
 }
