@@ -23,7 +23,7 @@ public class BestTravelApplication implements CommandLineRunner {
 //	private final CustomerRepository customerRepository;
 //	private final ReservationRepository reservationRepository;
 //	private final TourRepository tourRepository;
-//
+
 //	public BestTravelApplication(HotelRepository hotelRepository,
 //								 FlyRepository flyRepository,
 //								 TicketRepository ticketRepository,
@@ -67,7 +67,6 @@ public class BestTravelApplication implements CommandLineRunner {
 //		var fly =  flyRepository.findByTicketId(UUID.fromString("22345678-1234-5678-3235-567812345678")).orElse(null);
 //		System.out.println(fly);
 
-
 		// Todo: Consultas con lenguaje inclusivo JPA
 
 //		hotelRepository.findByPriceLessThan(BigDecimal.valueOf(90)).forEach(h -> System.out.println(h));
@@ -86,11 +85,11 @@ public class BestTravelApplication implements CommandLineRunner {
 //		log.info("Fly " + fly.getDestinyName());
 //		var hotel = hotelRepository.findById(3L).orElseThrow();
 //		log.info("Hotel" + hotel.getName());
-//
+
 //		var tour = TourEntity.builder()
 //				.customer(customer)
 //				.build();
-//
+
 //		var ticket = TicketEntity.builder()
 //				.id(UUID.randomUUID())
 //				.price(fly.getPrice().multiply(BigDecimal.TEN))
@@ -101,7 +100,7 @@ public class BestTravelApplication implements CommandLineRunner {
 //				.tour(tour)
 //				.fly(fly)
 //				.build();
-//
+
 //		var reservation = ReservationEntity.builder()
 //				.id(UUID.randomUUID())
 //				.dateTimeReservation(LocalDateTime.now())
@@ -113,13 +112,13 @@ public class BestTravelApplication implements CommandLineRunner {
 //				.totalDays(1)
 //				.price(hotel.getPrice().multiply(BigDecimal.TEN))
 //				.build();
-//
+
 //		tour.addReservation(reservation);
 //		tour.updateReservation();
-//
+
 //		tour.addTicket(ticket);
 //		tour.updateTickets();
-//
+
 //		var tourSaved = tourRepository.save(tour);
 //		tourRepository.deleteById(tourSaved.getId());
 	}

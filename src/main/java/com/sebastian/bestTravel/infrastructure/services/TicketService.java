@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.FlyRepository;
 import com.sebastian.bestTravel.domain.repositories.TicketRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITicketService;
+import com.sebastian.bestTravel.util.BestTravelUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Transactional
@@ -43,8 +43,8 @@ public class TicketService implements ITicketService {
                 .fly(fly)
                 .customer(customer)
                 .purchaseDate(LocalDate.now())
-                .arrivalDate(LocalDateTime.now())
-                .departureDate(LocalDateTime.now())
+                .arrivalDate(BestTravelUtil.laterRandomLater())
+                .departureDate(BestTravelUtil.getRandomSoon())
                 .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
                 .build();
 
@@ -66,8 +66,8 @@ public class TicketService implements ITicketService {
         var ticketToUpdate = ticketRepository.findById(uuid).orElseThrow();
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
-        ticketToUpdate.setArrivalDate(LocalDateTime.now());
-        ticketToUpdate.setDepartureDate(LocalDateTime.now());
+        ticketToUpdate.setArrivalDate(BestTravelUtil.laterRandomLater());
+        ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
         var ticketUpdated = ticketRepository.save(ticketToUpdate);
         log.info("Ticket updated" + ticketUpdated.getId());
         return entityToResponse(ticketUpdated);

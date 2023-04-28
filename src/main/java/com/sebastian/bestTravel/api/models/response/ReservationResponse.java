@@ -1,6 +1,6 @@
 package com.sebastian.bestTravel.api.models.response;
 
-import com.sebastian.bestTravel.domain.entities.HotelEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,10 +17,11 @@ import java.util.UUID;
 @Builder
 public class ReservationResponse {
     private UUID id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTimeReservation;
     private LocalDate dateStart;
     private LocalDate dateEnd;
     private Integer totalDays;
     private BigDecimal price;
-    private HotelEntity hotel;
+    private HotelResponse hotel;
 }
