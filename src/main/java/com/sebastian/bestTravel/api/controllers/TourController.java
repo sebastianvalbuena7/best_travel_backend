@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("tour")
+@RequestMapping("/tour")
 public class TourController {
     private final ITourService tourService;
 

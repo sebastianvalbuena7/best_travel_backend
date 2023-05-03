@@ -1,6 +1,5 @@
 package com.sebastian.bestTravel.api.controllers;
 
-import com.sebastian.bestTravel.api.models.response.FlyResponse;
 import com.sebastian.bestTravel.api.models.response.HotelResponse;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IHotelService;
 import com.sebastian.bestTravel.util.SortType;
