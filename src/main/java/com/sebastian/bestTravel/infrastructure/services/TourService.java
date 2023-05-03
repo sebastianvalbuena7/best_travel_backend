@@ -5,10 +5,7 @@ import com.sebastian.bestTravel.api.models.response.TourResponse;
 import com.sebastian.bestTravel.domain.entities.FlyEntity;
 import com.sebastian.bestTravel.domain.entities.HotelEntity;
 import com.sebastian.bestTravel.domain.entities.TourEntity;
-import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
-import com.sebastian.bestTravel.domain.repositories.FlyRepository;
-import com.sebastian.bestTravel.domain.repositories.HotelRepository;
-import com.sebastian.bestTravel.domain.repositories.TourRepository;
+import com.sebastian.bestTravel.domain.repositories.*;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITourService;
 import com.sebastian.bestTravel.infrastructure.helpers.TourHelper;
 import lombok.AllArgsConstructor;
@@ -27,6 +24,7 @@ public class TourService implements ITourService {
     private final TourRepository tourRepository;
     private final FlyRepository flyRepository;
     private final HotelRepository hotelRepository;
+    private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
 
@@ -68,21 +66,35 @@ public class TourService implements ITourService {
 
     @Override
     public void removeTicket(UUID ticketId, Long tourId) {
-
+        var tourUpdate = tourRepository.findById(tourId).orElseThrow();
+        tourUpdate.removeTicket(ticketId);
+        tourRepository.save(tourUpdate);
     }
 
     @Override
     public UUID addTicket(Long flyId, Long tourId) {
-        return null;
+        var tourUpdate = tourRepository.findById(tourId).orElseThrow();
+        var fly = flyRepository.findById(flyId).orElseThrow();
+        var ticket = tourHelper.createTicket(fly, tourUpdate.getCustomer());
+        tourUpdate.addTicket(ticket);
+        tourRepository.save(tourUpdate);
+        return ticket.getId();
     }
 
     @Override
     public void removeReservation(UUID reservationId, Long tourId) {
-
+        var tourUpdate = tourRepository.findById(tourId).orElseThrow();
+        tourUpdate.removeReservation(reservationId);
+        tourRepository.save(tourUpdate);
     }
 
     @Override
-    public UUID addReservation(Long reservationId, Long tourId) {
-        return null;
+    public UUID addReservation(Long hotelId, Long tourId, Integer totalDays) {
+        var tourUpdate = tourRepository.findById(tourId).orElseThrow();
+        var hotel = hotelRepository.findById(hotelId).orElseThrow();
+        var reservation = tourHelper.createReservation(hotel, tourUpdate.getCustomer(), totalDays);
+        tourUpdate.addReservation(reservation);
+        tourRepository.save(tourUpdate);
+        return reservation.getId();
     }
 }

@@ -32,37 +32,49 @@ public class TourEntity {
     @JoinColumn(name = "id_customer")
     private CustomerEntity customer;
 
-    @PrePersist
+    // Ciclo de vido de una entidad♥️
+    @PrePersist // Antes de guardar en la base de datos actualiza las claves foraneas
+    @PreRemove // Antes de que se vaya a remover elimina las claves foraneas con sus tickets y reservations
     public void updateFks() {
         this.tickets.forEach(ticketEntity -> ticketEntity.setTour(this));
         this.reservations.forEach(reservationEntity -> reservationEntity.setTour(this));
     }
 
-//    public void addTicket(TicketEntity ticketEntity) {
-//        if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
-//        this.tickets.add(ticketEntity);
-//    }
-//
+    public void removeTicket(UUID idTicket) {
+        this.tickets.forEach(ticketEntity -> {
+            if (ticketEntity.getId().equals(idTicket)) {
+                ticketEntity.setTour(null);
+            }
+        });
+    }
+
+    public void addTicket(TicketEntity ticket) {
+        if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
+        this.tickets.add(ticket);
+        this.tickets.forEach(ticketEntity -> ticketEntity.setTour(this));
+    }
+
+    public void removeReservation(UUID idReservation) {
+        this.reservations.forEach(reservationEntity -> {
+            if (reservationEntity.getId().equals(idReservation)) {
+                reservationEntity.setTour(null);
+            }
+        });
+    }
+
+    public void addReservation(ReservationEntity reservation) {
+        if(Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
+        this.reservations.add(reservation);
+        this.reservations.forEach(reservationEntity -> reservationEntity.setTour(this));
+    }
+
 //    public void removeTicket(UUID id) {
 //        if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
 //        this.tickets.removeIf(ticketEntity -> ticketEntity.getId().equals(id));
 //    }
 //
-//    public void updateTickets() {
-//        this.tickets.forEach(ticketEntity -> ticketEntity.setTour(this));
-//    }
-//
-//    public void addReservation(ReservationEntity reservationEntity) {
-//        if(Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
-//        this.reservations.add(reservationEntity);
-//    }
-//
 //    public void removeReservation(UUID id) {
 //        if(Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
 //        this.reservations.removeIf(reservationEntity -> reservationEntity.getId().equals(id));
-//    }
-//
-//    public void updateReservation() {
-//        this.reservations.forEach(reservationEntity -> reservationEntity.setTour(this));
 //    }
 }
