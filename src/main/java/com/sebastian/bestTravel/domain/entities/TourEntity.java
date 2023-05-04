@@ -32,7 +32,7 @@ public class TourEntity {
     @JoinColumn(name = "id_customer")
     private CustomerEntity customer;
 
-    // Ciclo de vido de una entidad♥️
+    // Ciclo de vida de una entidad♥️
     @PrePersist // Antes de guardar en la base de datos actualiza las claves foraneas
     @PreRemove // Antes de que se vaya a remover elimina las claves foraneas con sus tickets y reservations
     public void updateFks() {
@@ -71,10 +71,5 @@ public class TourEntity {
 //    public void removeTicket(UUID id) {
 //        if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
 //        this.tickets.removeIf(ticketEntity -> ticketEntity.getId().equals(id));
-//    }
-//
-//    public void removeReservation(UUID id) {
-//        if(Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
-//        this.reservations.removeIf(reservationEntity -> reservationEntity.getId().equals(id));
 //    }
 }

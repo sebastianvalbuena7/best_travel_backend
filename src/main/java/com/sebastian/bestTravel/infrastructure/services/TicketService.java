@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.FlyRepository;
 import com.sebastian.bestTravel.domain.repositories.TicketRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITicketService;
+import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.util.BestTravelUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class TicketService implements ITicketService {
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
+    private final CustomerHelper customerHelper;
 
     @Override
     public BigDecimal findPrice(Long flyId) {
@@ -49,6 +51,7 @@ public class TicketService implements ITicketService {
                 .build();
 
         var ticketPersistent = ticketRepository.save(ticketToPersist);
+        customerHelper.increase(customer.getDni(), TicketService.class);
         log.info("Ticket Saved with id: " + ticketPersistent.getId());
 
         return entityToResponse(ticketPersistent);

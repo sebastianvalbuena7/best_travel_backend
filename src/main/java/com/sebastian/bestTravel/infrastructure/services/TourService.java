@@ -7,6 +7,7 @@ import com.sebastian.bestTravel.domain.entities.HotelEntity;
 import com.sebastian.bestTravel.domain.entities.TourEntity;
 import com.sebastian.bestTravel.domain.repositories.*;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITourService;
+import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.TourHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class TourService implements ITourService {
     private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
+    private final CustomerHelper customerHelper;
 
     @Override
     public TourResponse create(TourRequest request) {
@@ -41,6 +43,7 @@ public class TourService implements ITourService {
                 .customer(customer)
                 .build();
         var tourSaved = tourRepository.save(tourToSave);
+        customerHelper.increase(customer.getDni(), TourService.class);
         return TourResponse.builder()
                 .reservationIds(tourSaved.getReservations().stream().map(reservationEntity -> reservationEntity.getId()).collect(Collectors.toSet()))
                 .ticketIds(tourSaved.getTickets().stream().map(ticketEntity -> ticketEntity.getId()).collect(Collectors.toSet()))
