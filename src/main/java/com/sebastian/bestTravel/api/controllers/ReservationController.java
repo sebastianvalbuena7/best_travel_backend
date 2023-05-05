@@ -3,6 +3,7 @@ package com.sebastian.bestTravel.api.controllers;
 import com.sebastian.bestTravel.api.models.request.ReservationRequest;
 import com.sebastian.bestTravel.api.models.response.ReservationResponse;
 import com.sebastian.bestTravel.infrastructure.services.ReservationService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class ReservationController {
     private final ReservationService reservationService;
     @PostMapping
-    public ResponseEntity<ReservationResponse> post(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<ReservationResponse> post(@Valid @RequestBody ReservationRequest reservationRequest) {
         return ResponseEntity.ok(reservationService.create(reservationRequest));
     }
 
@@ -28,7 +29,7 @@ public class ReservationController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ReservationResponse> put(@RequestBody ReservationRequest reservationRequest, @PathVariable UUID id) {
+    public ResponseEntity<ReservationResponse> put(@Valid @RequestBody ReservationRequest reservationRequest, @PathVariable UUID id) {
         return ResponseEntity.ok(reservationService.update(reservationRequest, id));
     }
 

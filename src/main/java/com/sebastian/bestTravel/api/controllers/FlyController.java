@@ -2,7 +2,7 @@ package com.sebastian.bestTravel.api.controllers;
 
 import com.sebastian.bestTravel.api.models.response.FlyResponse;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IFlyService;
-import com.sebastian.bestTravel.util.SortType;
+import com.sebastian.bestTravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

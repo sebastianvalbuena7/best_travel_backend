@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.HotelRepository;
 import com.sebastian.bestTravel.domain.repositories.ReservationRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IReservationService;
+import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.util.exceptions.IdNotFoundException;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class ReservationService implements IReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
+    private BlackListHelper blackListHelper;
 
     @Override
     public BigDecimal findPrice(UUID uuid) {
@@ -39,6 +41,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
+        blackListHelper.isInBlackListCustomer(request.getIdClient());
         var hotel = hotelRepository.findById(request.getIdHotel()).orElseThrow(() -> new IdNotFoundException("hotel"));
         var customer = customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException("customer"));
         var reservationToPersist = ReservationEntity.builder()

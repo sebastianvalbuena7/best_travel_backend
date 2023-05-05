@@ -4,7 +4,7 @@ import com.sebastian.bestTravel.api.models.response.HotelResponse;
 import com.sebastian.bestTravel.domain.entities.HotelEntity;
 import com.sebastian.bestTravel.domain.repositories.HotelRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IHotelService;
-import com.sebastian.bestTravel.util.SortType;
+import com.sebastian.bestTravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;

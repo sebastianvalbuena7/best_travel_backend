@@ -7,6 +7,7 @@ import com.sebastian.bestTravel.domain.entities.HotelEntity;
 import com.sebastian.bestTravel.domain.entities.TourEntity;
 import com.sebastian.bestTravel.domain.repositories.*;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITourService;
+import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.TourHelper;
 import lombok.AllArgsConstructor;
@@ -29,9 +30,11 @@ public class TourService implements ITourService {
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
+    private BlackListHelper blackListHelper;
 
     @Override
     public TourResponse create(TourRequest request) {
+        blackListHelper.isInBlackListCustomer(request.getCustomerId());
         var customer = customerRepository.findById(request.getCustomerId()).orElseThrow();
         var flights = new HashSet<FlyEntity>();
         request.getFlights().forEach(fly -> flights.add(flyRepository.findById(fly.getId()).orElseThrow()));

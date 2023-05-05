@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.FlyRepository;
 import com.sebastian.bestTravel.domain.repositories.TicketRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITicketService;
+import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.util.BestTravelUtil;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class TicketService implements ITicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
+    private BlackListHelper blackListHelper;
 
     @Override
     public BigDecimal findPrice(Long flyId) {
@@ -38,6 +40,7 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse create(TicketRequest request) {
+        blackListHelper.isInBlackListCustomer(request.getIdClient());
         var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
         var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
         var ticketToPersist = TicketEntity.builder()

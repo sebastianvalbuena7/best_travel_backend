@@ -6,11 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponse extends BaseErrorResponse{
-    private String error;
+public class ErrorsResponse extends BaseErrorResponse {
+    private List<String> errors;
 }

@@ -1,6 +1,6 @@
 package com.sebastian.bestTravel.domain.entities;
 
-import com.sebastian.bestTravel.util.AeroLine;
+import com.sebastian.bestTravel.util.enums.AeroLine;
 import jakarta.persistence.*;
 import lombok.*;
 
