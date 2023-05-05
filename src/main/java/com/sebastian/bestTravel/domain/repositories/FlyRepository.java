@@ -13,7 +13,7 @@ public interface FlyRepository extends JpaRepository<FlyEntity, Long> {
     //    @Query("select fly from fly where fly.price < :price")
     //    Set<FlyEntity> selectLessPrice(@Param("price") BigDecimal name);
 
-    //    @Query(value = "select fly from fly where fly.price < :price", nativeQuery = true)
+    //     @Query(value = "select fly from fly where fly.price < :price", nativeQuery = true)
     //    Set<FlyEntity> selectLessPrice(BigDecimal price);
 
     @Query("select f from fly f where f.price < :price")
