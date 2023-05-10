@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.HotelRepository;
 import com.sebastian.bestTravel.domain.repositories.ReservationRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IReservationService;
+import com.sebastian.bestTravel.infrastructure.helpers.ApiCurrencyConnectorHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.util.enums.Tables;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.UUID;
 
 @Service
@@ -32,12 +34,16 @@ public class ReservationService implements IReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
-    private BlackListHelper blackListHelper;
+    private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper currencyConnectorHelper;
 
     @Override
-    public BigDecimal findPrice(UUID uuid) {
+    public BigDecimal findPrice(UUID uuid, Currency currency) {
         var reservation = reservationRepository.findById(uuid).orElseThrow(() -> new IdNotFoundException(Tables.reservation.name()));
-        return reservation.getPrice().add(reservation.getPrice().multiply(charger_price_percentage));
+        var priceInDollars = reservation.getPrice().add(reservation.getPrice().multiply(charger_price_percentage));
+        if (currency.equals(Currency.getInstance("USD"))) return priceInDollars;
+        var currencyDTO = this.currencyConnectorHelper.getCurrency(currency);
+        return priceInDollars.multiply(currencyDTO.getRates().get(currency));
     }
 
     @Override

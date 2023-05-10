@@ -7,11 +7,13 @@ import com.sebastian.bestTravel.infrastructure.abstract_services.IFlyService;
 import com.sebastian.bestTravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -19,9 +21,14 @@ import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
-@AllArgsConstructor
 public class FlyService implements IFlyService {
     private final FlyRepository flyRepository;
+    private final WebClient webClient;
+
+    public FlyService(FlyRepository flyRepository, @Qualifier(value = "currency") WebClient webClient) { // Con @Qualifier le puedo decir cual bean quiero inyectar dado su nombre
+        this.flyRepository = flyRepository;
+        this.webClient = webClient;
+    }
 
     @Override
     public Page<FlyResponse> readAll(Integer page, Integer size, SortType sortType) {

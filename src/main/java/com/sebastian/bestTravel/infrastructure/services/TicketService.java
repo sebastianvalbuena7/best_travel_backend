@@ -8,6 +8,7 @@ import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
 import com.sebastian.bestTravel.domain.repositories.FlyRepository;
 import com.sebastian.bestTravel.domain.repositories.TicketRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITicketService;
+import com.sebastian.bestTravel.infrastructure.helpers.ApiCurrencyConnectorHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
 import com.sebastian.bestTravel.util.BestTravelUtil;
@@ -18,9 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.UUID;
 
 @Transactional
@@ -32,12 +35,16 @@ public class TicketService implements ITicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
-    private BlackListHelper blackListHelper;
+    private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper currencyConnectorHelper;
 
     @Override
-    public BigDecimal findPrice(Long flyId) {
+    public BigDecimal findPrice(Long flyId, Currency currency) {
         var fly = flyRepository.findById(flyId).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
-        return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+        var priceFly = fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+        if (currency.equals(Currency.getInstance("USD"))) return priceFly;
+        var currencyDTO = this.currencyConnectorHelper.getCurrency(currency);
+        return priceFly.multiply(currencyDTO.getRates().get(currency));
     }
 
     @Override
