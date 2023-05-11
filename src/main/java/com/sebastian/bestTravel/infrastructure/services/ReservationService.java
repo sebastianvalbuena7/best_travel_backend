@@ -11,6 +11,7 @@ import com.sebastian.bestTravel.infrastructure.abstract_services.IReservationSer
 import com.sebastian.bestTravel.infrastructure.helpers.ApiCurrencyConnectorHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
+import com.sebastian.bestTravel.infrastructure.helpers.EmailHelper;
 import com.sebastian.bestTravel.util.enums.Tables;
 import com.sebastian.bestTravel.util.exceptions.IdNotFoundException;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -36,6 +38,7 @@ public class ReservationService implements IReservationService {
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
     private final ApiCurrencyConnectorHelper currencyConnectorHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public BigDecimal findPrice(UUID uuid, Currency currency) {
@@ -63,6 +66,7 @@ public class ReservationService implements IReservationService {
                 .build();
         var reservationPersistent = reservationRepository.save(reservationToPersist);
         customerHelper.increase(customer.getDni(), ReservationService.class);
+        if(Objects.nonNull(request.getEmail())) emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.reservation.name());
         return entityToResponse(reservationPersistent);
     }
 

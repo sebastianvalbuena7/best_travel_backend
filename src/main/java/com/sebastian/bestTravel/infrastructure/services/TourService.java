@@ -9,6 +9,7 @@ import com.sebastian.bestTravel.domain.repositories.*;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITourService;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
+import com.sebastian.bestTravel.infrastructure.helpers.EmailHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.TourHelper;
 import com.sebastian.bestTravel.util.enums.Tables;
 import com.sebastian.bestTravel.util.exceptions.IdNotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,11 @@ public class TourService implements ITourService {
     private final TourRepository tourRepository;
     private final FlyRepository flyRepository;
     private final HotelRepository hotelRepository;
-    private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
-    private BlackListHelper blackListHelper;
+    private final BlackListHelper blackListHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public TourResponse create(TourRequest request) {
@@ -49,6 +51,7 @@ public class TourService implements ITourService {
                 .build();
         var tourSaved = tourRepository.save(tourToSave);
         customerHelper.increase(customer.getDni(), TourService.class);
+        if(Objects.nonNull(request.getEmail())) emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.tour.name());
         return TourResponse.builder()
                 .reservationIds(tourSaved.getReservations().stream().map(reservationEntity -> reservationEntity.getId()).collect(Collectors.toSet()))
                 .ticketIds(tourSaved.getTickets().stream().map(ticketEntity -> ticketEntity.getId()).collect(Collectors.toSet()))

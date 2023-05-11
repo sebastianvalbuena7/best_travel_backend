@@ -11,9 +11,11 @@ import com.sebastian.bestTravel.infrastructure.abstract_services.ITicketService;
 import com.sebastian.bestTravel.infrastructure.helpers.ApiCurrencyConnectorHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;
+import com.sebastian.bestTravel.infrastructure.helpers.EmailHelper;
 import com.sebastian.bestTravel.util.BestTravelUtil;
 import com.sebastian.bestTravel.util.enums.Tables;
 import com.sebastian.bestTravel.util.exceptions.IdNotFoundException;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.Objects;
 import java.util.UUID;
 
 @Transactional
@@ -37,6 +40,7 @@ public class TicketService implements ITicketService {
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
     private final ApiCurrencyConnectorHelper currencyConnectorHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public BigDecimal findPrice(Long flyId, Currency currency) {
@@ -64,6 +68,7 @@ public class TicketService implements ITicketService {
 
         var ticketPersistent = ticketRepository.save(ticketToPersist);
         customerHelper.increase(customer.getDni(), TicketService.class);
+        if(Objects.nonNull(request.getEmail())) emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.ticket.name());
         log.info("Ticket Saved with id: " + ticketPersistent.getId());
 
         return entityToResponse(ticketPersistent);
