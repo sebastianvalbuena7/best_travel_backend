@@ -41,6 +41,7 @@ public class RedisConfig {
         return Redisson.create(config);
     }
 
+
     @Bean
     @Autowired
     public CacheManager cacheManager(RedissonClient redissonClient) {
