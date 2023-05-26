@@ -1,4 +1,4 @@
-package com.sebastian.bestTravel.domain.entities;
+package com.sebastian.bestTravel.domain.entities.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;

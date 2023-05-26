@@ -1,12 +1,11 @@
 package com.sebastian.bestTravel.infrastructure.services;
 
 import com.sebastian.bestTravel.api.models.response.FlyResponse;
-import com.sebastian.bestTravel.domain.entities.FlyEntity;
-import com.sebastian.bestTravel.domain.repositories.FlyRepository;
+import com.sebastian.bestTravel.domain.entities.jpa.FlyEntity;
+import com.sebastian.bestTravel.domain.repositories.jpa.FlyRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IFlyService;
 import com.sebastian.bestTravel.util.constants.CacheConstants;
 import com.sebastian.bestTravel.util.enums.SortType;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;

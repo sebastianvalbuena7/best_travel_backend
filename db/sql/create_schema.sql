@@ -7,7 +7,7 @@ CREATE TABLE customer
     total_lodgings int NOT NULL,
     total_tours    int NOT NULL,
     phone_number  varchar(20) NOT NULL,
-    CONSTRAINT pk_customer PRIMARY KEY ( dni )
+    CONSTRAINT pk_customer PRIMARY KEY ( dni)
 );
 
 CREATE TABLE fly

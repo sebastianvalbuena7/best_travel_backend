@@ -1,6 +1,6 @@
-package com.sebastian.bestTravel.domain.repositories;
+package com.sebastian.bestTravel.domain.repositories.jpa;
 
-import com.sebastian.bestTravel.domain.entities.ReservationEntity;
+import com.sebastian.bestTravel.domain.entities.jpa.ReservationEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

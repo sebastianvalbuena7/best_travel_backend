@@ -1,8 +1,8 @@
 package com.sebastian.bestTravel.infrastructure.services;
 
 import com.sebastian.bestTravel.api.models.response.HotelResponse;
-import com.sebastian.bestTravel.domain.entities.HotelEntity;
-import com.sebastian.bestTravel.domain.repositories.HotelRepository;
+import com.sebastian.bestTravel.domain.entities.jpa.HotelEntity;
+import com.sebastian.bestTravel.domain.repositories.jpa.HotelRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.IHotelService;
 import com.sebastian.bestTravel.util.constants.CacheConstants;
 import com.sebastian.bestTravel.util.enums.SortType;

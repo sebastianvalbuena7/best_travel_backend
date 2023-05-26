@@ -2,10 +2,13 @@ package com.sebastian.bestTravel.infrastructure.services;
 
 import com.sebastian.bestTravel.api.models.request.TourRequest;
 import com.sebastian.bestTravel.api.models.response.TourResponse;
-import com.sebastian.bestTravel.domain.entities.FlyEntity;
-import com.sebastian.bestTravel.domain.entities.HotelEntity;
-import com.sebastian.bestTravel.domain.entities.TourEntity;
-import com.sebastian.bestTravel.domain.repositories.*;
+import com.sebastian.bestTravel.domain.entities.jpa.FlyEntity;
+import com.sebastian.bestTravel.domain.entities.jpa.HotelEntity;
+import com.sebastian.bestTravel.domain.entities.jpa.TourEntity;
+import com.sebastian.bestTravel.domain.repositories.jpa.CustomerRepository;
+import com.sebastian.bestTravel.domain.repositories.jpa.FlyRepository;
+import com.sebastian.bestTravel.domain.repositories.jpa.HotelRepository;
+import com.sebastian.bestTravel.domain.repositories.jpa.TourRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ITourService;
 import com.sebastian.bestTravel.infrastructure.helpers.BlackListHelper;
 import com.sebastian.bestTravel.infrastructure.helpers.CustomerHelper;

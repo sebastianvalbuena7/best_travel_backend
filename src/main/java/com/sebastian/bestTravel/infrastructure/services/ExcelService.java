@@ -1,7 +1,7 @@
 package com.sebastian.bestTravel.infrastructure.services;
 
-import com.sebastian.bestTravel.domain.entities.CustomerEntity;
-import com.sebastian.bestTravel.domain.repositories.CustomerRepository;
+import com.sebastian.bestTravel.domain.entities.jpa.CustomerEntity;
+import com.sebastian.bestTravel.domain.repositories.jpa.CustomerRepository;
 import com.sebastian.bestTravel.infrastructure.abstract_services.ReportService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.sebastian.bestTravel.domain.entities;
+package com.sebastian.bestTravel.domain.entities.jpa;
 
 import com.sebastian.bestTravel.util.enums.AeroLine;
 import jakarta.persistence.*;

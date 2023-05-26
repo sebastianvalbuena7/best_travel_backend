@@ -1,18 +1,10 @@
 package com.sebastian.bestTravel;
 
-import com.sebastian.bestTravel.domain.entities.ReservationEntity;
-import com.sebastian.bestTravel.domain.entities.TicketEntity;
-import com.sebastian.bestTravel.domain.entities.TourEntity;
-import com.sebastian.bestTravel.domain.repositories.*;
-import lombok.extern.slf4j.Slf4j;
+import com.sebastian.bestTravel.domain.repositories.mongo.AppUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @SpringBootApplication
 //@Slf4j

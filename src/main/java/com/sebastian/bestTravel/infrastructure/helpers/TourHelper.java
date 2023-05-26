@@ -1,8 +1,8 @@
 package com.sebastian.bestTravel.infrastructure.helpers;
 
-import com.sebastian.bestTravel.domain.entities.*;
-import com.sebastian.bestTravel.domain.repositories.ReservationRepository;
-import com.sebastian.bestTravel.domain.repositories.TicketRepository;
+import com.sebastian.bestTravel.domain.entities.jpa.*;
+import com.sebastian.bestTravel.domain.repositories.jpa.ReservationRepository;
+import com.sebastian.bestTravel.domain.repositories.jpa.TicketRepository;
 import com.sebastian.bestTravel.util.BestTravelUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

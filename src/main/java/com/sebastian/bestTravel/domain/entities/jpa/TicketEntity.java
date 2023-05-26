@@ -1,4 +1,4 @@
-package com.sebastian.bestTravel.domain.entities;
+package com.sebastian.bestTravel.domain.entities.jpa;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,23 +11,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "reservation")
+@Entity(name = "ticket")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
 @Builder
-public class ReservationEntity {
+public class TicketEntity {
     @Id
     private UUID id;
-    @Column(name = "date_reservation")
-    private LocalDateTime dateTimeReservation;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
-    private Integer totalDays;
+    private LocalDateTime departureDate;
+    private LocalDateTime arrivalDate;
+    private LocalDate purchaseDate;
     private BigDecimal price;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id")
-    private HotelEntity hotel;
+    @JoinColumn(name = "fly_id")
+    private FlyEntity fly;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_id", nullable = true)
     private TourEntity tour;

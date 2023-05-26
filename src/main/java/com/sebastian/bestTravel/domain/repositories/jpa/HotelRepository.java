@@ -1,6 +1,6 @@
-package com.sebastian.bestTravel.domain.repositories;
+package com.sebastian.bestTravel.domain.repositories.jpa;
 
-import com.sebastian.bestTravel.domain.entities.HotelEntity;
+import com.sebastian.bestTravel.domain.entities.jpa.HotelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;

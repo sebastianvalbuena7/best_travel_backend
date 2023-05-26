@@ -1,6 +1,6 @@
-package com.sebastian.bestTravel.domain.repositories;
+package com.sebastian.bestTravel.domain.repositories.jpa;
 
-import com.sebastian.bestTravel.domain.entities.FlyEntity;
+import com.sebastian.bestTravel.domain.entities.jpa.FlyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
